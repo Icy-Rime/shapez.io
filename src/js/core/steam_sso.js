@@ -1,9 +1,9 @@
 import { T } from "../translations";
 import { openStandaloneLink } from "./config";
 
-export let WEB_STEAM_SSO_AUTHENTICATED = false;
+export let WEB_STEAM_SSO_AUTHENTICATED = true;
 
-export async function authorizeViaSSOToken(app, dialogs) {
+export async function authorizeViaSSOToken (app, dialogs) {
     if (G_IS_STANDALONE) {
         return;
     }
@@ -25,7 +25,7 @@ export async function authorizeViaSSOToken(app, dialogs) {
         const { ok, getStandalone } = dialogs.showWarning(
             T.dialogs.steamSsoNoOwnership.title,
             T.dialogs.steamSsoNoOwnership.desc,
-            ["ok", "getStandalone:good"]
+            [ "ok", "getStandalone:good" ]
         );
         window.localStorage.setItem("steam_sso_auth_token", "");
         getStandalone.add(() => {

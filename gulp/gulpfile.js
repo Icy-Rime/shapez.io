@@ -10,7 +10,7 @@ const execSync = require("child_process").execSync;
 
 // Load other plugins dynamically
 const $ = require("gulp-load-plugins")({
-    scope: ["devDependencies"],
+    scope: [ "devDependencies" ],
     pattern: "*",
 });
 
@@ -31,8 +31,8 @@ const envVars = [
 ];
 
 for (let i = 0; i < envVars.length; ++i) {
-    if (!process.env[envVars[i]]) {
-        console.warn("Unset environment variable, might cause issues:", envVars[i]);
+    if (!process.env[ envVars[ i ] ]) {
+        console.warn("Unset environment variable, might cause issues:", envVars[ i ]);
     }
 }
 
@@ -144,9 +144,9 @@ gulp.task("main.webserver", () => {
  * @param {object} param0
  * @param {keyof typeof BUILD_VARIANTS} param0.version
  */
-function serveHTML({ version = "web-dev" }) {
+function serveHTML ({ version = "web-dev" }) {
     browserSync.init({
-        server: [buildFolder, path.join(baseDir, "mod_examples")],
+        server: [ buildFolder, path.join(baseDir, "mod_examples") ],
         port: 3005,
         ghostMode: {
             clicks: false,
@@ -161,11 +161,11 @@ function serveHTML({ version = "web-dev" }) {
         notify: false,
         reloadDebounce: 100,
         reloadOnRestart: true,
-        watchEvents: ["add", "change"],
+        watchEvents: [ "add", "change" ],
     });
 
     // Watch .scss files, those trigger a css rebuild
-    gulp.watch(["../src/**/*.scss"], gulp.series("css.dev"));
+    gulp.watch([ "../src/**/*.scss" ], gulp.series("css.dev"));
 
     // Watch .html files, those trigger a html rebuild
     gulp.watch("../src/**/*.html", gulp.series("html." + version + ".dev"));
@@ -175,11 +175,11 @@ function serveHTML({ version = "web-dev" }) {
     gulp.watch("../translations/**/*.yaml", gulp.series("translations.convertToJson"));
 
     gulp.watch(
-        ["../res_raw/sounds/sfx/*.mp3", "../res_raw/sounds/sfx/*.wav"],
+        [ "../res_raw/sounds/sfx/*.mp3", "../res_raw/sounds/sfx/*.wav" ],
         gulp.series("sounds.sfx", "sounds.copy")
     );
     gulp.watch(
-        ["../res_raw/sounds/music/*.mp3", "../res_raw/sounds/music/*.wav"],
+        [ "../res_raw/sounds/music/*.mp3", "../res_raw/sounds/music/*.wav" ],
         gulp.series("sounds.music", "sounds.copy")
     );
 
@@ -193,7 +193,7 @@ function serveHTML({ version = "web-dev" }) {
     gulp.watch("../res_built/atlas/*.json", gulp.series("imgres.atlas"));
 
     // Watch the build folder and reload when anything changed
-    const extensions = ["html", "js", "png", "gif", "jpg", "svg", "mp3", "ico", "woff2", "json"];
+    const extensions = [ "html", "js", "png", "gif", "jpg", "svg", "mp3", "ico", "woff2", "json" ];
     gulp.watch(extensions.map(ext => path.join(buildFolder, "**", "*." + ext))).on("change", function (path) {
         return gulp.src(path).pipe(browserSync.reload({ stream: true }));
     });
@@ -236,7 +236,7 @@ gulp.task(
 
 // Builds everything for every variant
 for (const variant in BUILD_VARIANTS) {
-    const data = BUILD_VARIANTS[variant];
+    const data = BUILD_VARIANTS[ variant ];
     const buildName = "build." + variant;
 
     // build
@@ -314,4 +314,6 @@ gulp.task(
 );
 
 // Default task (dev, localhost)
-gulp.task("default", gulp.series("serve.web-localhost"));
+// gulp.task("default", gulp.series("serve.web-localhost"));
+// gulp.task("default", gulp.series("build.web-shapezio-beta"));
+gulp.task("default", gulp.series("build.web-shapezio"));

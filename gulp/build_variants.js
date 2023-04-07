@@ -26,7 +26,9 @@ const BUILD_VARIANTS = {
     "web-shapezio": {
         standalone: false,
         environment: "prod",
-        buildArgs: {},
+        buildArgs: {
+            gogVersion: true,
+        },
     },
     "standalone-steam": {
         standalone: true,
